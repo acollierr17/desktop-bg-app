@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Desktop Background Changer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <link rel="stylesheet" href="index.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  </head>
+  <body>
+    <section class="section flex-container" id="mainSection">
+      <div id="header">
+        <h1 class="title appTitle">🖥️ Desktop Background Changer</h1>
+        <p class="subtitle appDescription">Import an image link and change your desktop background on the fly!</p>
+      </div>
+
+      <br />
+
+      <div id="manage">
+        <div id="linkInput" class="control has-icons-left field">
+          <input id="bgLink" class="input" type="text" placeholder="https://example.com/image.png" autofocus>
+          <span class="icon is-small is-left">
+            <i class="fas fa-images"></i>
+          </span>
+        </div>
+        <div class="field">
+          <button id="importBg" class="button is-success" disabled>Import</button>
+          <button id="setBg" class="button is-warning" disabled>Set Background</button>
+          <button id="luckyBg" class="button is-info">🍪 Cookie</button>
+        </div>
+      </div>
+
+      <br />
+
+      <div>
+        <p>Made with <span style="color: #e25555;">&#9829;</span> by <a href="http://github.com/acollierr17">Anthony Collier</a></p>
+      </div>
+      <br />
+      <img id="importedBg"></img>
+    </section>
+  </body>
+</html>
