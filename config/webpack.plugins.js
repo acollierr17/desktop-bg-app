@@ -9,9 +9,13 @@ module.exports = [
   new CopyWebpackPlugin({
     patterns: [
       {
-        from: path.resolve(__dirname, 'src/styles/index.css'),
-        to: path.resolve(__dirname, '.webpack/renderer/index.css')
-      }
-    ]
+        from: path.join(path.resolve(), 'src/styles/index.css'),
+        to: path.join(path.resolve(), '.webpack/renderer/index.css')
+      },
+      {
+        from: path.join(path.resolve(), 'node_modules/wallpaper/source/win-wallpaper.exe'),
+        to: path.join(path.resolve(), '.webpack/renderer/native_modules/win-wallpaper.exe')
+      },
+    ],
   }),
 ];
