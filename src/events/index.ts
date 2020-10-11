@@ -3,6 +3,7 @@ import { remote } from 'electron';
 import wallpaper from 'wallpaper';
 import path from 'path';
 import os from 'os';
+// eslint-disable-next-line import/no-unresolved
 import * as functions from '../functions';
 
 const mainSection = document.getElementById('mainSection') as HTMLElement;
@@ -28,7 +29,7 @@ const successNotif = functions.successDiv('Successfully set the image as your de
 const clearImportSuccess = functions.successDiv('Successfully cleared the current imported desktop background.', 'clearImportSuccess', 'clearImportSuccessClose');
 
 
-linkInput.onchange = e => {
+linkInput.onchange = (e): void => {
   const evtTarget = e.target as HTMLInputElement;
   const imageURL = evtTarget.value;
   const isURLValid = functions.isValidImageURL(imageURL);
@@ -47,15 +48,15 @@ linkInput.onchange = e => {
     setBackground.disabled = true;
     return;
   }
-  
+
   if (isURLValid) {
     evtTarget.classList.add('is-success');
     evtTarget.classList.remove('is-danger');
     evtTarget.parentNode.append(validURL);
-    
+
     if (linkInputDiv.querySelectorAll(`#${error.id}`).length >= 1) linkInputDiv.querySelectorAll(`#${error.id}`)
       .forEach(node => node.remove());
-    
+
     importBackground.disabled = false;
     setBackground.disabled = false;
   } else {
@@ -75,19 +76,19 @@ linkInput.onchange = e => {
   if (!isImported) setBackground.disabled = true;
 };
 
-linkInput.onmouseenter = e => {
+linkInput.onmouseenter = (e): void => {
   const evtTarget = e.target as HTMLButtonElement;
   // if (!evtTarget.classList.contains('is-success')) evtTarget.classList.add('is-info');
   evtTarget.classList.add('is-focused');
 };
 
-linkInput.onmouseleave = e => {
+linkInput.onmouseleave = (e): void => {
   const evtTarget = e.target as HTMLButtonElement;
   // if (evtTarget.classList.contains('is-info')) evtTarget.classList.remove('is-info');
   evtTarget.classList.remove('is-focused');
 };
 
-importBackground.onclick = async () => {
+importBackground.onclick = async (): Promise<void> => {
   if (isImported) {
     importBackground.textContent = 'Import';
     importBackground.classList.remove('is-danger');
@@ -133,7 +134,7 @@ importBackground.onclick = async () => {
       if (linkInput.classList.contains('is-danger')) linkInput.classList.remove('is-danger');
     }
     if (linkInput.parentNode.contains(validURL)) linkInput.parentNode.append(validURL);
-    
+
     if (isImported && setBackground.disabled) setBackground.disabled = false;
     if (isImported && importBackground.disabled) importBackground.disabled = false;
     if (linkInputDiv.querySelectorAll(`#${validURL.id}`).length >= 1) linkInputDiv.querySelectorAll(`#${validURL.id}`)
@@ -160,7 +161,7 @@ importBackground.onclick = async () => {
   }
 };
 
-setBackground.onclick = async () => {
+setBackground.onclick = async (): Promise<void> => {
   try {
     const imageURL = linkInput.value;
     const isURLValid = functions.isValidImageURL(imageURL);
@@ -208,7 +209,7 @@ setBackground.onclick = async () => {
       await wallpaper.set(filePath, { scale: 'stretch' });
       mainSection.insertBefore(successNotif, importedBackground);
     });
-    
+
     functions.removeLoading(setBackground);
     functions.removeLoading(importBackground);
   } catch (error) {
@@ -222,10 +223,10 @@ setBackground.onclick = async () => {
   }
 };
 
-feelingLucky.onclick = async () => {
+feelingLucky.onclick = async (): Promise<void> => {
   try {
     const luckyImage = randomUnsplashImage;
-    
+
     importBackground.classList.add('is-loading');
     importBackground.disabled = true;
     linkInput.disabled = true;
@@ -247,7 +248,7 @@ feelingLucky.onclick = async () => {
       if (linkInput.classList.contains('is-danger')) linkInput.classList.remove('is-danger');
     }
     if (linkInput.parentNode.contains(validURL)) linkInput.parentNode.append(validURL);
-    
+
     if (isImported && setBackground.disabled) setBackground.disabled = false;
     if (isImported && importBackground.disabled) importBackground.disabled = false;
     if (linkInputDiv.querySelectorAll(`#${validURL.id}`).length >= 1) linkInputDiv.querySelectorAll(`#${validURL.id}`)
@@ -270,7 +271,7 @@ feelingLucky.onclick = async () => {
 
 document.addEventListener('click', e => {
   const evtTarget = e.target as HTMLElement;
-  
+
   if (evtTarget && (evtTarget.id === 'successNotifClose')) {
     document.getElementById('successNotif').remove();
     if (document.getElementById('savedNotif')) document.getElementById('savedNotif').remove();

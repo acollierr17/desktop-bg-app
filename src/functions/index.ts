@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 export function errorParagraph(message: string, id: string): HTMLParagraphElement {
   const paragraph = document.createElement('p');
   const text = document.createTextNode(message);
@@ -44,7 +45,7 @@ export function errorDiv(message: string, divID: string, buttonID: string): HTML
   return div;
 }
 
-export function removeLoading(element: HTMLElement, time = 3000) {
+export function removeLoading(element: HTMLElement, time = 3000): void {
   setTimeout(() => {
     element.classList.remove('is-loading');
   }, time);
@@ -62,17 +63,10 @@ export function newFileName(name?: string): string {
   return `img-${date}-${time}.png`;
 }
 
-export async function getImageBuffer(imageURL: string, lucky = false): Promise<Buffer> {
-  let data;
-  if (lucky) data = await getBase64Image(imageURL);
-  data = imageURL.replace(/^data:image\/\w+;base64,/, "");
-  return Buffer.from(data, 'base64');
-}
-
 export function isValidImageURL(imageURL: string): boolean {
   const re = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g;
   return re.test(imageURL);
-};
+}
 
 export function getBase64Image(imageURL: string): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -81,12 +75,12 @@ export function getBase64Image(imageURL: string): Promise<string> {
     xhr.open('GET', imageURL, true);
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
 
-    xhr.onload = () => {
+    xhr.onload = (): void => {
       let base64: string,
         binary: string,
         bytes: Uint8Array,
         mediaType: string;
-        
+
       bytes = new Uint8Array(xhr.response);
       binary = [].map.call(bytes, (byte: number) => {
         return String.fromCharCode(byte);
@@ -101,9 +95,16 @@ export function getBase64Image(imageURL: string): Promise<string> {
       resolve(base64);
     };
 
-    xhr.onerror = error => {
+    xhr.onerror = (error): void => {
       reject(error);
     };
     xhr.send();
   });
+}
+
+export async function getImageBuffer(imageURL: string, lucky = false): Promise<Buffer> {
+  let data;
+  if (lucky) data = await getBase64Image(imageURL);
+  else data = imageURL.replace(/^data:image\/\w+;base64,/, "");
+  return Buffer.from(data, 'base64');
 }
